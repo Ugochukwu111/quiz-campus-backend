@@ -9,21 +9,9 @@ const jwt = require('jsonwebtoken');
 const app = express();
 
 // === CORS Configuration === //
-const allowedOrigins = [
-  "http://localhost:5500",
-  "http://127.0.0.1:5500",
-   "https://quiz-campus.vercel.app"
-];
+const cors = require('cors');
+app.use(cors()); // Allow all origins temporarily
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed from this origin: " + origin));
-    }
-  }
-}));
 
 // === Middleware === //
 app.use(express.json()); // Parse incoming JSON bodies
