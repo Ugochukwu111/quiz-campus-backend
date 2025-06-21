@@ -49,3 +49,37 @@ const quizCampusSignupSchema = new mongoose.Schema({
   school: String,
 });
 const quizcampus = mongoose.model("quizcampus", quizCampusSignupSchema);
+
+
+// Sign up route 
+app.post("/signup", async function (req, res) {
+  try {
+    const { fullname, email, password, confirmPassword, school } = req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ error: "Passwords do not match" });
+    }
+
+    const existingUser = await QuizCampus.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email already registered" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new QuizCampus({
+      fullname,
+      email,
+      password: hashedPassword,
+      school,
+    });
+
+    await newUser.save();
+
+    res.status(201).json({ message: "Signup successful" });
+
+  } catch (err) {
+    console.error("Error saving user:", err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
