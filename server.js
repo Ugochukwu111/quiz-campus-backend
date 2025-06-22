@@ -8,9 +8,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
 
-// === CORS Configuration === //
-const cors = require('cors');
-app.use(cors()); // Allow all origins temporarily
+// ✅ 1. Setup CORS FIRST — before anything else
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 
 // === Middleware === //
