@@ -22,9 +22,8 @@ const transporter = nodemailer.createTransport({
 
 // ✅ 1. Setup CORS FIRST — before anything else
 app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+   origin: ['https://quiz-campus.vercel.app'],
+  credentials: true
 }));
 
 
